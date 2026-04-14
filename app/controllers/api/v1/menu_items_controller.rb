@@ -1,7 +1,8 @@
 class Api::V1::MenuItemsController < ApplicationController
+  before_action :authenticate_request, only: %i[create update destroy]
   before_action :set_restaurant, only: %i[index create]
   before_action :set_menu_item, only: %i[update destroy]
-  before_action :validate_category_param, only: :index
+  before_action :validate_category_param, only: %i[index]
 
   def index
     @menu_items = @restaurant.menu_items

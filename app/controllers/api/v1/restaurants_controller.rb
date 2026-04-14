@@ -1,4 +1,5 @@
 class Api::V1::RestaurantsController < ApplicationController
+  before_action :authenticate_request, only: %i[create update destroy]
   before_action :set_restaurant, only: %i[show update destroy]
 
   def index
