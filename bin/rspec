@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+docker compose exec -e RAILS_ENV=test api rails db:prepare
 docker compose exec -e RAILS_ENV=test api rspec "$@"
