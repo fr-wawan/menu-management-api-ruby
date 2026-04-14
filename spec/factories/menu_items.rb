@@ -1,10 +1,10 @@
 FactoryBot.define do
   factory :menu_item do
-     name { "MyString" }
-     description { "MyText" }
-     price { "9.99" }
-     category { "MyString" }
-    is_available { false }
-     restaurant { nil }
+    name { Faker::Food.dish }
+    description { Faker::Food.description }
+    price { Faker::Number.decimal(l_digits: 2) }
+    category { MenuItem.categories.keys.sample }
+    is_available { true }
+    association :restaurant
   end
 end

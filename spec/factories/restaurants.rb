@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :restaurant do
-    name { "MyString" }
-    address { "MyString" }
-    phone { "MyString" }
-    opening_hours { "MyString" }
+    name { Faker::Restaurant.name }
+    address { Faker::Address.full_address }
+    phone { Faker::PhoneNumber.phone_number }
+    opening_hours { "08:00 - 22:00" }
   end
 end
