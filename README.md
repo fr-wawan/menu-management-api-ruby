@@ -271,6 +271,19 @@ Restaurant deletion cascades to menu items to maintain referential integrity.
 bundle exec rspec
 ```
 
+### Running Tests with Docker
+
+```bash
+docker compose exec -e RAILS_ENV=test api bin/rails db:create db:schema:load
+docker compose exec -e RAILS_ENV=test api rspec
+```
+
+Or use the helper script:
+
+```bash
+bin/rspec
+```
+
 ## Project Structure
 
 ```

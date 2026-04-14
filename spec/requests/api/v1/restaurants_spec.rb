@@ -5,7 +5,7 @@ RSpec.describe "Api::V1::Restaurants", type: :request do
   let(:headers) { { "Authorization" => "Bearer #{user.token}" } }
 
   describe "GET /api/v1/restaurants" do
-    before { create_list(:restaurant, 3) }
+    before { create_list(:restaurant, 3, name: "Cafe Place") }
 
     it "returns all restaurants" do
       get "/api/v1/restaurants"

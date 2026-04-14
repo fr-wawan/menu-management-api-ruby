@@ -34,6 +34,7 @@ services:
     environment:
       RAILS_ENV: development
       DATABASE_URL: mysql2://root:${MYSQL_ROOT_PASSWORD:-rootpassword}@db:3306/hungryhub_development
+      DATABASE_URL_TEST: mysql2://root:${MYSQL_ROOT_PASSWORD:-rootpassword}@db:3306/hungryhub_test
       REDIS_URL: redis://redis:6379/0
     depends_on:
       db:
