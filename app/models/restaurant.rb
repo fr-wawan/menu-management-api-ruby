@@ -6,9 +6,13 @@ class Restaurant < ApplicationRecord
 
   after_commit :invalidate_cache
 
-  scope :cached_index, ->(page) {
-    Rails.cache.fetch("restaurants:index:page:#{page || 1}", expires_in: 5.minutes) do
-      restaurants = order(:name).page(page).per(10)
+  scope :cached_index, ->(page:, search: nil) {
+    cache_key = "restaurants:index:page:#{page || 1}:search:#{search.presence || "all"}"
+
+    Rails.cache.fetch(cache_key, expires_in: 5.minutes) do
+      restaurants = order(:name)
+        .search(search)
+        .page(page).per(10)
       {
         data: restaurants.as_json,
         meta: {
@@ -18,6 +22,12 @@ class Restaurant < ApplicationRecord
         }
       }
     end
+  }
+
+  scope :search, ->(search) {
+    return all unless search.present?
+
+    where("name LIKE ?", "%#{search}%")
   }
 
   def cached_show
