@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "4cff8a05-70b0-4102-b42e-2f506602caec",
+    "_postman_id": "4029dd34-3398-408d-a96d-5f4310099493",
     "name": "Menu Management API Ruby",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "43274340"
@@ -111,6 +111,61 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Logout",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let response = pm.response.json();",
+                  "pm.environment.set(\"token\", response.token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/auth/logout",
+              "host": [
+                "{{APP_URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "logout"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -123,7 +178,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{APP_URL}}/api/v1/restaurants?page=1",
+              "raw": "{{APP_URL}}/api/v1/restaurants?page=1&search=",
               "host": [
                 "{{APP_URL}}"
               ],
@@ -136,6 +191,10 @@
                 {
                   "key": "page",
                   "value": "1"
+                },
+                {
+                  "key": "search",
+                  "value": ""
                 }
               ]
             }
@@ -315,6 +374,16 @@
         {
           "name": "Create Menu Item",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "POST",
             "header": [],
             "body": {
@@ -384,6 +453,16 @@
         {
           "name": "Delete Menu Item",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "DELETE",
             "header": [],
             "url": {
