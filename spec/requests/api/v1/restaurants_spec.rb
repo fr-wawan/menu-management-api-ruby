@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Api::V1::Restaurants", type: :request do
   let(:user) { create(:user) }
-  let(:headers) { {"Authorization" => "Bearer #{user.token}"} }
+  let(:headers) { { "Authorization" => "Bearer #{user.token}" } }
 
   describe "GET /api/v1/restaurants" do
     before { create_list(:restaurant, 3) }
@@ -17,6 +17,18 @@ RSpec.describe "Api::V1::Restaurants", type: :request do
       get "/api/v1/restaurants"
       meta = JSON.parse(response.body)["meta"]
       expect(meta).to include("current_page", "total_pages", "total_count")
+    end
+
+    it "filters restaurants by name" do
+      create(:restaurant, name: "Pizza Palace")
+      create(:restaurant, name: "Burger Barn")
+
+      get "/api/v1/restaurants", params: { search: "Pizza" }
+      body = JSON.parse(response.body)
+
+      expect(response).to have_http_status(:ok)
+      expect(body["data"].size).to eq(1)
+      expect(body["data"].first["name"]).to eq("Pizza Palace")
     end
   end
 
@@ -41,14 +53,14 @@ RSpec.describe "Api::V1::Restaurants", type: :request do
     context "when authenticated" do
       it "creates a restaurant" do
         post "/api/v1/restaurants",
-          params: {restaurant: {name: "Test Resto", address: "Test Address"}}.to_json,
+          params: { restaurant: { name: "Test Resto", address: "Test Address" } }.to_json,
           headers: headers.merge("Content-Type" => "application/json")
         expect(response).to have_http_status(:created)
       end
 
       it "returns error when name is missing" do
         post "/api/v1/restaurants",
-          params: {restaurant: {address: "Test Address"}}.to_json,
+          params: { restaurant: { address: "Test Address" } }.to_json,
           headers: headers.merge("Content-Type" => "application/json")
         expect(response).to have_http_status(:unprocessable_content)
         expect(JSON.parse(response.body)).to have_key("errors")
@@ -58,8 +70,8 @@ RSpec.describe "Api::V1::Restaurants", type: :request do
     context "when unauthenticated" do
       it "returns 401" do
         post "/api/v1/restaurants",
-          params: {restaurant: {name: "Test Resto", address: "Test Address"}}.to_json,
-          headers: {"Content-Type" => "application/json"}
+          params: { restaurant: { name: "Test Resto", address: "Test Address" } }.to_json,
+          headers: { "Content-Type" => "application/json" }
         expect(response).to have_http_status(:unauthorized)
       end
     end
@@ -70,7 +82,7 @@ RSpec.describe "Api::V1::Restaurants", type: :request do
 
     it "updates a restaurant" do
       put "/api/v1/restaurants/#{restaurant.id}",
-        params: {restaurant: {name: "Updated Name"}}.to_json,
+        params: { restaurant: { name: "Updated Name" } }.to_json,
         headers: headers.merge("Content-Type" => "application/json")
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body)["name"]).to eq("Updated Name")
