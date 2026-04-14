@@ -9,7 +9,7 @@ class Api::V1::Auth::RegistrationsController < ApplicationController
         user: @user.as_json(only: %i[id name email created_at])
       }, status: :created
     else
-      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+      render json: {errors: @user.errors.full_messages}, status: :unprocessable_content
     end
   end
 

@@ -16,7 +16,7 @@ class Api::V1::RestaurantsController < ApplicationController
     if @restaurant.save
       render json: @restaurant, status: :created
     else
-      render json: {errors: @restaurant.errors.full_messages}, status: :unprocessable_entity
+      render json: {errors: @restaurant.errors.full_messages}, status: :unprocessable_content
     end
   end
 
@@ -24,7 +24,7 @@ class Api::V1::RestaurantsController < ApplicationController
     if @restaurant.update(restaurant_params)
       render json: @restaurant
     else
-      render json: {errors: @restaurant.errors.full_messages}, status: :unprocessable_entity
+      render json: {errors: @restaurant.errors.full_messages}, status: :unprocessable_content
     end
   end
 

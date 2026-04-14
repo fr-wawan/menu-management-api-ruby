@@ -8,15 +8,15 @@ class ApplicationController < ActionController::API
     token = request.headers["Authorization"]&.split(" ")&.last
 
     unless token.present? && (@current_user = User.find_by(token: token))
-      render json: { error: "Unauthorized. Please provide a valid token" }, status: :unauthorized
+      render json: {error: "Unauthorized. Please provide a valid token"}, status: :unauthorized
     end
   end
 
   def not_found(exception)
-    render json: { error: exception.message }, status: :not_found
+    render json: {error: exception.message}, status: :not_found
   end
 
   def invalid_argument(exception)
-    render json: { errors: [ exception.message ] }, status: :unprocessable_entity
+    render json: {errors: [exception.message]}, status: :unprocessable_content
   end
 end

@@ -26,7 +26,7 @@ class Api::V1::MenuItemsController < ApplicationController
     if @menu_item.save
       render json: @menu_item, status: :created
     else
-      render json: { errors: @menu_item.errors.full_messages }, status: :unprocessable_entity
+      render json: {errors: @menu_item.errors.full_messages}, status: :unprocessable_content
     end
   end
 
@@ -34,7 +34,7 @@ class Api::V1::MenuItemsController < ApplicationController
     if @menu_item.update(menu_item_params)
       render json: @menu_item
     else
-      render json: { errors: @menu_item.errors.full_messages }, status: :unprocessable_entity
+      render json: {errors: @menu_item.errors.full_messages}, status: :unprocessable_content
     end
   end
 
@@ -57,8 +57,8 @@ class Api::V1::MenuItemsController < ApplicationController
     return unless params[:category].present? && !MenuItem.categories.key?(params[:category])
 
     render json: {
-      errors: [ "Invalid category. Valid categories are: #{MenuItem.categories.keys.join(", ")}" ]
-    }, status: :unprocessable_entity
+      errors: ["Invalid category. Valid categories are: #{MenuItem.categories.keys.join(", ")}"]
+    }, status: :unprocessable_content
   end
 
   def menu_item_params
