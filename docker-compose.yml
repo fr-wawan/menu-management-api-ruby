@@ -24,6 +24,7 @@ services:
 
   api:
     build: .
+    user: "${UID}:${GID}"
     command: bundle exec puma -C config/puma.rb
     volumes:
       - .:/app
