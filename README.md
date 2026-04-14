@@ -81,6 +81,25 @@ bundle exec rails server
 bundle exec rspec
 ```
 
+## Running Tests
+
+```bash
+bundle exec rspec
+```
+
+### Running Tests with Docker
+
+```bash
+docker compose exec -e RAILS_ENV=test api bin/rails db:prepare
+docker compose exec -e RAILS_ENV=test api rspec
+```
+
+Or use the helper script:
+
+```bash
+bin/rspec
+```
+
 ## API Documentation
 
 ### Postman Collection
@@ -266,25 +285,6 @@ Restaurant deletion cascades to menu items to maintain referential integrity.
 
 ### 6. Rate Limiting
 Auth endpoints (`/api/v1/auth/*`) are rate-limited by IP to reduce brute-force abuse, and a global per-IP limit protects the rest of the API. In non-test environments, Rack::Attack uses Redis for shared counters.
-
-## Running Tests
-
-```bash
-bundle exec rspec
-```
-
-### Running Tests with Docker
-
-```bash
-docker compose exec -e RAILS_ENV=test api bin/rails db:prepare
-docker compose exec -e RAILS_ENV=test api rspec
-```
-
-Or use the helper script:
-
-```bash
-bin/rspec
-```
 
 ## Project Structure
 
