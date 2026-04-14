@@ -15,7 +15,7 @@ class Api::V1::RestaurantsController < ApplicationController
   end
 
   def show
-    render json: @restaurant
+    render json: @restaurant.as_json(include: :menu_items)
   end
 
   def create
