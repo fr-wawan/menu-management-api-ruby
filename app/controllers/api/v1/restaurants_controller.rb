@@ -3,20 +3,11 @@ class Api::V1::RestaurantsController < ApplicationController
   before_action :set_restaurant, only: %i[show update destroy]
 
   def index
-    @restaurants = Restaurant.order(:name).page(params[:page]).per(10)
-
-    render json: {
-      data: @restaurants,
-      meta: {
-        current_page: @restaurants.current_page,
-        total_pages: @restaurants.total_pages,
-        total_count: @restaurants.total_count
-      }
-    }
+    render json: Restaurant.cached_index(params[:page] || 1)
   end
 
   def show
-    render json: @restaurant.as_json(include: :menu_items)
+    render json: @restaurant.cached_show
   end
 
   def create
@@ -25,7 +16,7 @@ class Api::V1::RestaurantsController < ApplicationController
     if @restaurant.save
       render json: @restaurant, status: :created
     else
-      render json: { errors: @restaurant.errors.full_messages }, status: :unprocessable_entity
+      render json: {errors: @restaurant.errors.full_messages}, status: :unprocessable_entity
     end
   end
 
@@ -33,7 +24,7 @@ class Api::V1::RestaurantsController < ApplicationController
     if @restaurant.update(restaurant_params)
       render json: @restaurant
     else
-      render json: { errors: @restaurant.errors.full_messages }, status: :unprocessable_entity
+      render json: {errors: @restaurant.errors.full_messages}, status: :unprocessable_entity
     end
   end
 
@@ -45,7 +36,7 @@ class Api::V1::RestaurantsController < ApplicationController
   private
 
   def set_restaurant
-    @restaurant = Restaurant.find(params[:id])
+    @restaurant = Restaurant.includes(:menu_items).find(params[:id])
   end
 
   def restaurant_params
