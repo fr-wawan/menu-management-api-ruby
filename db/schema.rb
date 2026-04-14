@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_14_032241) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_14_095500) do
   create_table "menu_items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "category"
     t.datetime "created_at", null: false
@@ -20,6 +20,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_14_032241) do
     t.decimal "price", precision: 10
     t.bigint "restaurant_id", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_menu_items_on_name"
     t.index ["restaurant_id"], name: "index_menu_items_on_restaurant_id"
   end
 
@@ -30,6 +31,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_14_032241) do
     t.string "opening_hours"
     t.string "phone"
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_restaurants_on_name"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

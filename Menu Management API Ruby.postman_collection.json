@@ -1,0 +1,407 @@
+{
+  "info": {
+    "_postman_id": "4cff8a05-70b0-4102-b42e-2f506602caec",
+    "name": "Menu Management API Ruby",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "43274340"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let response = pm.response.json();",
+                  "pm.environment.set(\"token\", response.data.token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "a2b7d891445b1652127e562a2e2c04354636b2d8310a610533148f49a229bfb6",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user\": {\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"password\": \"password123\",\n    \"password_confirmation\": \"password123\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/auth/register",
+              "host": [
+                "{{APP_URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let response = pm.response.json();",
+                  "pm.environment.set(\"token\", response.token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "packages": {},
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user\": {\n    \"email\": \"john@example.com\",\n    \"password\": \"password123\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/auth/login",
+              "host": [
+                "{{APP_URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Restaurant",
+      "item": [
+        {
+          "name": "Get All Restaurant",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/restaurants?page=1",
+              "host": [
+                "{{APP_URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "restaurants"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Detail Restaurant",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/restaurants/1",
+              "host": [
+                "{{APP_URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "restaurants",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Restaurant",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"restaurant\": {\n        \"name\": \"Warung Bu Sari\",\n        \"address\": \"Jl. Sudirman No. 1\",\n        \"opening_hours\": \"08:00 - 12:00\",\n        \"phone\": \"62813769240\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/restaurants",
+              "host": [
+                "{{APP_URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "restaurants"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Restaurant",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"restaurant\": {\n        \"name\": \"Warung Bu Sari - Edit\",\n        \"address\": \"Jl. Sudirman No. 1\",\n        \"opening_hours\": \"08:00 - 12:00\",\n        \"phone\": \"62813769240\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/restaurants/3",
+              "host": [
+                "{{APP_URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "restaurants",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Restaurant",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/restaurants/3",
+              "host": [
+                "{{APP_URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "restaurants",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Menu Items",
+      "item": [
+        {
+          "name": "Get All Menu Items",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "00259f452a27f8daa3996bb6f758ad3e95e2e4eb25527d9cc74d21ec3bfa5a78",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/restaurants/1/menu_items?search=&category=",
+              "host": [
+                "{{APP_URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "restaurants",
+                "1",
+                "menu_items"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": ""
+                },
+                {
+                  "key": "category",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Menu Item",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"menu_item\": {\n    \"name\": \"Nasi Goreng\",\n    \"description\": \"Nasi goreng spesial\",\n    \"price\": 25000,\n    \"category\": \"appetizer\",\n    \"is_available\": true\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/restaurants/1/menu_items",
+              "host": [
+                "{{APP_URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "restaurants",
+                "1",
+                "menu_items"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Menu Item",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"menu_item\": {\n    \"name\": \"Nasi Goreng - Edit\",\n    \"description\": \"Nasi goreng spesial\",\n    \"price\": 25000,\n    \"category\": \"appetizer\",\n    \"is_available\": true\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/menu_items/11",
+              "host": [
+                "{{APP_URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "menu_items",
+                "11"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Menu Item",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{APP_URL}}/api/v1/menu_items/11",
+              "host": [
+                "{{APP_URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "menu_items",
+                "11"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

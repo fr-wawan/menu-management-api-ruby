@@ -1,4 +1,6 @@
 class Api::V1::Auth::SessionsController < ApplicationController
+  before_action :authenticate_request, only: :destroy
+
   def create
     @user = User.find_by(email: params.dig(:user, :email))
 
@@ -11,5 +13,10 @@ class Api::V1::Auth::SessionsController < ApplicationController
     else
       render json: { error: "Invalid email or password" }, status: :unauthorized
     end
+  end
+
+  def destroy
+    @current_user.regenerate_token
+    render json: { message: "Logout successful" }
   end
 end
