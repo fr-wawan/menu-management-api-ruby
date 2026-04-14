@@ -53,7 +53,6 @@ docker compose exec api bundle install
 
 # Setup database (create, migrate, seed)
 docker compose exec api bundle exec rails db:prepare
-docker compose exec api bundle exec rails db:seed
 ```
 
 The API will be available at: **http://localhost:3000**
